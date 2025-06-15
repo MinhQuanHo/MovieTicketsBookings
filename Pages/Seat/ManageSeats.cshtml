@@ -1,0 +1,72 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Seat.ManageSeatsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Seat Management</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/css/Seat.css">
+</head>
+
+<body>
+
+	<div class="container my-5 text-center">
+		<h2>CGV Aeon Hà Đông</h2>
+		<div class="d-flex justify-content-center mb-3">
+			<div class="btn-group" role="group">
+				<a class="btn btn-outline-danger" asp-page="/Seat/AddSeat">Add Seat</a>
+				<a class="btn btn-outline-danger" asp-page="/Seat/ModifySeat">Modify Seat</a>
+			</div>
+		</div>
+
+		<div class="screen"></div>
+		<h5 class="mb-4">Screen</h5>
+
+		<!-- Seat rows -->
+		<div class="seat-container">
+			@foreach (var row in Model.Rows)
+			{
+				<div class="seat-row">
+					@foreach (var seat in row.Seats)
+					{
+						<span class="seat @(seat.Status == "Inactive" ? "hidden-seat" : (seat.Status == "Booked" ? "booked-seat" : (row.Type == "Regular" ? "regular" : "vip-seat")))">
+							@seat.SeatName
+						</span>
+					}
+				</div>
+			}
+		</div>
+
+
+
+		<!-- Legend -->
+		<div class="legend">
+			<div class="legend-item">
+				<span class="regular-seat"></span> Regular Seat
+			</div>
+			<div class="legend-item">
+				<span class="vip-seat"></span> VIP Seat
+			</div>
+			<div class="legend-item">
+				<span class="sweetbox-seat"></span> Sweetbox Seat
+			</div>
+			<div class="legend-item">
+				<span class="booked-seat"></span> Booked Seat
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

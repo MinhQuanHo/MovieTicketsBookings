@@ -1,0 +1,432 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Seat.BookSeatModel
+@{
+	Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Select Seats</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link rel="stylesheet" href="~/css/profile.css" />
+	<style>
+		* {
+			font-family: 'Poppins', sans-serif;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			text-decoration: none;
+			list-style: none;
+			scroll-padding-top: 2rem;
+			scroll-behavior: smooth;
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+
+		body {
+			background-image: url("/img/login_background.jpg");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+
+
+		header {
+			position: fixed;
+			width: 100%;
+			top: 0;
+			right: 0;
+			z-index: 1000;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 15px 100px;
+			transition: 0.5s;
+			background: #0e0e0e36;
+		}
+
+			header.shadow {
+				background: var(--bg-color);
+				box-shadow: 0 0 4px rgb(14 15 14/15%);
+			}
+
+				header.shadow .navbar a {
+					color: var(--text-color);
+				}
+
+				header.shadow .logo {
+					color: var(--text-color);
+				}
+
+
+		.logo {
+			font-size: 30px;
+			font-weight: 600;
+			align-items: center;
+			color: var(--bg-color);
+			display: flex;
+			column-gap: 0.5rem;
+		}
+
+			.logo .bx {
+				color: #ff2c1f; /* Màu đỏ */
+			}
+
+
+		.navbar {
+			display: flex;
+			align-items: center; /* Căn giữa theo chiều dọc */
+			column-gap: 5rem;
+		}
+
+			.navbar li {
+				position: relative;
+				display: flex;
+				align-items: center; /* Đảm bảo nội dung trong li cũng căn giữa */
+				justify-content: center; /* Căn giữa theo chiều ngang (nếu cần) */
+			}
+
+
+			.navbar a {
+				font-size: 1rem;
+				font-weight: bold; /* Chữ đậm */
+				color: white !important; /* Màu trắng */
+			}
+
+				.navbar a::after {
+					background: orange; /* Đổi hiệu ứng gạch chân thành màu cam */
+				}
+
+
+				.navbar a::after {
+					content: '';
+					width: 0;
+					height: 2px;
+					background: var(--main-color);
+					position: absolute;
+					bottom: -4px;
+					left: 0;
+					transition: 0.4s all linear;
+				}
+
+				.navbar a:hover::after,
+				.navbar .home-active::after {
+					width: 100%;
+				}
+
+		#menu-icon {
+			font-size: 24px;
+			cursor: pointer;
+			z-index: 1000001;
+			display: none;
+		}
+
+		.btn1 {
+			padding: 0.5rem 1rem;
+			background: #ff2c1f; /* Đổi màu nền thành cam */
+			color: white; /* Chữ màu trắng */
+			font-weight: bold; /* Chữ đậm */
+			border-radius: 0.5rem;
+			border: none;
+		}
+
+			.btn1:hover {
+				background: #fa1208; /* Màu cam đậm hơn khi hover */
+			}
+
+
+		.play {
+			position: absolute;
+			right: 4rem;
+			bottom: 10%;
+		}
+
+			.play .bx {
+				background: var(--bg-color);
+				padding: 10px;
+				font-size: 2rem;
+				border-radius: 50%;
+				border: 4px solid rgb(2, 3, 7,0.5);
+				color: var(--main-color);
+			}
+
+				.play .bx:hover {
+					background: var(--main-color);
+					color: var(--bg-color);
+					transition: 0.2s all linear;
+				}
+
+		.screen-container {
+			perspective: 300px;
+		}
+
+		.seat-title {
+			color: red; /* Màu chữ đỏ */
+			font-size: 28px; /* Kích thước chữ */
+			font-weight: bold; /* Chữ đậm */
+			text-align: center;
+			padding-top: 30px;
+			margin-bottom: 20px;
+			text-shadow: 3px 3px 5px orange; /* Bóng chữ màu cam */
+		}
+
+
+		.screen {
+			background: #fff;
+			height: 40px;
+			width: 100%;
+			margin: 15px 0;
+			box-shadow: 0 3px 10px rgba(255,255,255,0.7);
+			color: #000;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transform: rotateX(-30deg);
+			z-index: 10;
+		}
+
+		.screen-shadow {
+			height: 30px;
+			background: rgba(0,0,0,0.1);
+			margin-top: -30px;
+			transform: rotateX(-30deg);
+			box-shadow: 0 3px 10px rgba(255,255,255,0.1);
+		}
+
+		.seats-container {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.row-name {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+		}
+
+		.seat-checkbox {
+			display: none;
+		}
+
+		.seats-row {
+			display: grid;
+			grid-template-columns: repeat(15, auto);
+			gap: 5px;
+			justify-content: start;
+		}
+
+		.seat {
+			display: inline-block;
+			width: 35px;
+			height: 35px;
+			border-radius: 5px;
+			background: #444451;
+			color: #fff;
+			text-align: center;
+			line-height: 35px;
+			margin: 3px;
+			cursor: pointer;
+			transition: transform 0.2s;
+		}
+
+			.seat.regular {
+				background: #444451;
+			}
+
+			.seat.vip {
+				background: #f1c40f;
+			}
+
+			.seat.booked {
+				background: #e74c3c;
+				cursor: not-allowed;
+			}
+
+		.seat-checkbox:checked + .seat {
+			background: #2ecc71;
+			transform: scale(1.1);
+		}
+
+		.seat-sample {
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			border-radius: 3px;
+			margin-right: 5px;
+			vertical-align: middle;
+		}
+
+			.seat-sample.regular {
+				background: #444451;
+			}
+
+			.seat-sample.vip {
+				background: #f1c40f;
+			}
+
+			.seat-sample.booked {
+				background: #e74c3c;
+			}
+	</style>
+</head>
+<body style=" min-height: 100vh;">
+
+	<header>
+		<a href="/Index" class="logo" style="color: white">
+			<i class='bx bxs-movie'></i>CineMatic
+		</a>
+		<ul class="navbar">
+			<li><a asp-page="/Index" class="home-active">Trang chủ</a></li>
+			<li><a asp-page="/Index">Phim</a></li>
+			<li><a asp-page="/Index">Coming</a></li>
+			<li><a asp-page="/News/Blog">Tin Tức</a></li>
+			@if (User.Identity.IsAuthenticated)
+			{
+				<div class="profile-dropdown">
+					<span style="color: white" class="user-name" onclick="toggleDropdown()">Hello, @User.Identity.Name</span>
+					<div id="dropdown-menu" class="dropdown-content">
+						<ul>
+							<li><a asp-page="/UserProfile">Thông tin tài khoản</a></li>
+							<li><a asp-page="/BookingHistory">Lịch sử giao dịch</a></li>
+							<li><a asp-page="/Logout">Đăng xuất</a></li>
+						</ul>
+					</div>
+				</div>
+			}
+			else
+			{
+				<li><a asp-page="/Login" class="btn1">Đăng nhập</a></li>
+				<li><a asp-page="/SignUp" class="btn1">Đăng ký</a></li>
+			}
+		</ul>
+	</header>
+
+	<div class="container" style="margin-top: 120px; background-color: antiquewhite; border-radius: 15px; border:dashed; border-color:orangered">
+
+		<h2 class="text-center mb-4 seat-title" style="padding-top: 30px">Select Your Seats</h2>
+
+		<div class="screen-container text-center mb-5" style="width: 80%; margin: auto">
+			<div  class="screen mb-3">SCREEN</div>
+			<div class="screen-shadow"></div>
+		</div>
+
+		<form method="post" id="seatForm">
+			<div class="seats-container" style="margin: auto">
+				@foreach (var row in Model.Rows)
+            {
+                <div class="row mb-2">
+                    <div class="col-1 row-name">@row.RowName</div>
+					<br/>
+                    <div class="col seats-row">
+                        @foreach (var seat in row.Seats.OrderBy(s =>
+                       {
+                           var number = int.Parse(s.SeatName.Substring(1));
+                           return number;
+                       }))
+                        {
+                            string seatClass = Model.SeatStatuses[seat.Id] == "Booked" ? "booked" :
+                            row.Type.ToLower() == "vip" ? "vip" : "regular";
+
+                            <div class="seat-wrapper mx-1">
+                                <input type="checkbox"
+                                       id="seat_@seat.Id"
+                                       name="SelectedSeatIds"
+                                       value="@seat.Id"
+                                       class="seat-checkbox"
+                                @(Model.SeatStatuses[seat.Id] == "Booked" ? "disabled" : "")>
+                                <label for="seat_@seat.Id"
+                                       class="seat @seatClass"
+                                       data-seat-name="@seat.SeatName"
+                                       data-type="@row.Type">
+                                    @seat.SeatName
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+			</div>
+
+			<div class="seat-legend mt-4 text-center">
+				<div class="d-inline-block mx-3">
+					<span class="seat-sample regular"></span>
+					<span>Regular (120,000₫)</span>
+				</div>
+				<div class="d-inline-block mx-3">
+					<span class="seat-sample vip"></span>
+					<span>VIP (150,000₫)</span>
+				</div>
+				<div class="d-inline-block mx-3">
+					<span class="seat-sample booked"></span>
+					<span>Booked</span>
+				</div>
+			</div>
+
+			<div class="total-amount mt-4 text-center">
+				<h4>Total Amount: <span id="totalAmount">0₫</span></h4>
+			</div>
+
+			<div class="text-center mt-4"; style="padding-bottom: 30px">
+				<button style="color: yellow; border-color: red; border: dashed" type="submit" class="btn btn-danger" id="continueBtn" disabled>Continue to Food Selection</button>
+			</div>
+		</form>
+	</div>
+
+	<script>
+		$(document).ready(function () {
+			function updateTotalAmount() {
+				const selectedSeats = $('input[name="SelectedSeatIds"]:checked').toArray();
+				const seatIds = selectedSeats.map(seat => parseInt(seat.value));
+
+				if (seatIds.length > 0) {
+					$.ajax({
+						url: '/Seat/BookSeat?handler=CalculateTotal',
+						method: 'GET',
+						traditional: true,
+						data: {
+							seatIds: seatIds
+						},
+						success: function (response) {
+							if (response && typeof response.total !== 'undefined') {
+								$('#totalAmount').text(response.total.toLocaleString() + '₫');
+								$('#continueBtn').prop('disabled', seatIds.length === 0);
+
+								console.log('Selected seats:', seatIds);
+								console.log('Total amount:', response.total);
+							} else {
+								console.error('Invalid response format');
+								$('#totalAmount').text('0₫');
+								$('#continueBtn').prop('disabled', true);
+							}
+						},
+						error: function (xhr, status, error) {
+							console.error('Error:', error);
+							$('#totalAmount').text('0₫');
+							$('#continueBtn').prop('disabled', true);
+						}
+					});
+				} else {
+					$('#totalAmount').text('0₫');
+					$('#continueBtn').prop('disabled', true);
+				}
+			}
+
+			$(document).on('change', 'input[name="SelectedSeatIds"]', updateTotalAmount);
+		});
+	</script>
+
+</body>
+</html>

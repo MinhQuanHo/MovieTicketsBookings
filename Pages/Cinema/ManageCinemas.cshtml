@@ -1,0 +1,246 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Cinema.ManageCinemasModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Chỉnh sửa rạp chiếu phim</h2>
+
+    <!-- Nút thêm rạp chiếu phim -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+        <div class="flex-shrink-0 mb-3 mb-md-0">
+            <a class="btn btn-success" asp-page="/Cinema/CreateCinema">
+                <i class="bi bi-plus-circle me-2"></i> Thêm rạp chiếu phim mới
+            </a>
+        </div>
+    </div>
+
+    <!-- Form tìm kiếm -->
+    <form method="get" class="my-4">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="searchString"
+                           value="@Model.CurrentFilter" placeholder="Tìm kiếm theo tên hoặc thành phố">
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                    @if (!string.IsNullOrEmpty(Model.CurrentFilter))
+                    {
+                        <a class="btn btn-outline-secondary" asp-page="./ManageCinemas">
+                            <i class="bi bi-x-circle"></i> Clear
+                        </a>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Bảng danh sách rạp -->
+    <div class="table-responsive">
+        @if (!Model.cinemas.Any())
+        {
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle me-2"></i>
+                @if (!string.IsNullOrEmpty(Model.CurrentFilter))
+                {
+                    <span>No cinemas found matching '@Model.CurrentFilter'</span>
+                }
+                else
+                {
+                    <span>No cinemas found</span>
+                }
+            </div>
+        }
+        else
+        {
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>City</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cinema in Model.cinemas)
+                    {
+                        <tr>
+                            <td>@cinema.Id</td>
+                            <td>@cinema.Name</td>
+                            <td>@cinema.Location</td>
+                            <td>@cinema.City</td>
+                            <td>
+                                <span class="badge @(cinema.Status == "Active" ? "bg-success" : "bg-danger")">
+                                    @cinema.Status
+                                </span>
+                            </td>
+                            <td class="text-center">
+                                <a asp-page="/Cinema/EditCinema" asp-route-id="@cinema.Id" class="btn btn-sm btn-outline-primary me-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-page="/Cinema/CinemaDetails" asp-route-id="@cinema.Id" class="btn btn-sm btn-outline-info">
+                                    <i class="bi bi-journal-text"></i> Details
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+
+    <!-- Phân trang -->
+    <nav aria-label="Page navigation" class="container mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" href="?pageNumber=@(Model.CurrentPage - 1)&searchString=@Model.CurrentFilter">Previous</a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" href="?pageNumber=@i&searchString=@Model.CurrentFilter">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages || Model.cinemas.Count == 0 ? "disabled" : "")">
+                <a class="page-link" href="?pageNumber=@(Model.CurrentPage + 1)&searchString=@Model.CurrentFilter">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #ff2c1f;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px orange;
+        }
+
+        .table {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(255, 245, 238, 0.8);
+        }
+
+        .btn-success {
+            padding: 0.5rem 1rem;
+            background: #ff2c1f;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-success:hover {
+                background: #fa1208;
+            }
+
+        .btn-outline-secondary, .btn-outline-primary, .btn-outline-info {
+            padding: 0.5rem 1rem;
+            border-color: #ff2c1f;
+            color: #ff2c1f;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .btn-outline-secondary:hover, .btn-outline-primary:hover, .btn-outline-info:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+
+        .form-select, .form-control {
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 0.5em 1em;
+        }
+
+        .alert-info {
+            background: rgba(173, 216, 230, 0.9);
+            border-radius: 10px;
+            color: #0c5460;
+        }
+
+        .pagination .page-link {
+            color: #ff2c1f;
+            border-radius: 0.5rem;
+            margin: 0 2px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: #ff2c1f;
+            border-color: #ff2c1f;
+            color: white;
+        }
+
+        .pagination .page-link:hover {
+            background: #fa1208;
+            color: white;
+            border-color: #fa1208;
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}

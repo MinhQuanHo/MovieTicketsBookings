@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BookingTicketOnline</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/BookingTicketOnline.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        .logo {
+            font-size: 40px;
+            font-weight: 600;
+            align-items: center;
+            color: white;
+            display: flex;
+            column-gap: 0.5rem;
+        }
+
+            .logo .bx {
+                font-size: 40px;
+                color: #ff2c1f;
+            }
+    </style>
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+            <a href="/HomeOwner" class="logo">
+                <i class='bx bxs-movie'></i>CineMatic
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        if (User.IsInRole("3"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Hello, @User.Identity.Name
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-page="/UserProfile">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item" asp-page="/HomeOwner">Trang quản lý</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Index">Trang đặt vé</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Logout">Đăng xuất</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <script>
+                                window.location.href = "/AccessDenied";
+                            </script>
+                        }
+                    }
+                    else
+                    {
+                        <script>
+                            window.location.href = "/Login";
+                        </script>
+                    }
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <div class="bg-dark text-white p-1 text-center">
+        <h1>Trang Quản Lý của Movie Theater Owner</h1>
+    </div>
+
+    <div class="container my-5">
+        <main role="main" class="pb-3">
+            <partial name="_Notification" />
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

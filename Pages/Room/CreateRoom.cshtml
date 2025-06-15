@@ -1,0 +1,208 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Room.CreateRoomModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Create Room";
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Tạo phòng chiếu mới</h2>
+
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="Room.Name" class="form-label">Tên phòng</label>
+            <input asp-for="Room.Name" class="form-control" id="RoomName" />
+            <span asp-validation-for="Room.Name" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Cấu hình hàng ghế</label>
+            <div id="rowsContainer">
+                @for (int i = 0; i < Model.RowsInput.Count; i++)
+                {
+                    <div class="row mb-2 row-item">
+                        <div class="col-md-4">
+                            <input asp-for="RowsInput[i].RowName" class="form-control" placeholder="Tên hàng" />
+                            <span asp-validation-for="RowsInput[i].RowName" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <input asp-for="RowsInput[i].Type" class="form-control" placeholder="Loại (VD: Standard, VIP)" />
+                            <span asp-validation-for="RowsInput[i].Type" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4">
+                            <input asp-for="RowsInput[i].NumberOfColumns" type="number" class="form-control" placeholder="Số ghế" min="1" />
+                            <span asp-validation-for="RowsInput[i].NumberOfColumns" class="text-danger"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <button type="button" class="btn btn-success mt-3" id="addRowButton">
+                <i class="bi bi-plus"></i> Thêm hàng
+            </button>
+        </div>
+
+        <div class="form-group d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary mt-2">Tạo phòng</button>
+            <a asp-page="/Room/ManageRooms"
+               asp-route-id="@HttpContext.Session.GetInt32("CinemaID")"
+               class="btn btn-secondary mt-2">Quay lại danh sách phòng</a>
+        </div>
+    </form>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #ff2c1f;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px orange;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        #rowsContainer {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+            #rowsContainer .row {
+                border-bottom: 1px solid #ddd;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+
+        .form-control {
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-label {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1rem;
+            background: #ff2c1f;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-primary:hover {
+                background: #fa1208;
+            }
+
+        .btn-success {
+            padding: 0.5rem 1rem;
+            background: #ff2c1f;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-success:hover {
+                background: #fa1208;
+            }
+
+        .btn-secondary {
+            padding: 0.5rem 1rem;
+            border-color: #ff2c1f;
+            color: #ff2c1f;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .btn-secondary:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+
+        .text-danger {
+            font-size: 0.9rem;
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.getElementById("addRowButton").addEventListener("click", function () {
+            const container = document.getElementById("rowsContainer");
+            const rowCount = container.getElementsByClassName("row-item").length;
+            const newRow = `
+                <div class="row mb-2 row-item">
+                    <div class="col-md-4">
+                        <input class="form-control" name="RowsInput[${rowCount}].RowName" placeholder="Tên hàng" />
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-control" name="RowsInput[${rowCount}].Type" placeholder="Loại (VD: Standard, VIP)" />
+                    </div>
+                    <div class="col-md-4">
+                        <input type="number" class="form-control" name="RowsInput[${rowCount}].NumberOfColumns" placeholder="Số ghế" min="1" />
+                    </div>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', newRow);
+        });
+    </script>
+}

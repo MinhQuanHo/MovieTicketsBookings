@@ -1,0 +1,172 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Cinema.CinemaDetailsModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="text-center mb-0">Cinema Details</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Tên:</div>
+                        <div class="col-md-8">@Model.Cinema.Name</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Địa chỉ:</div>
+                        <div class="col-md-8">@Model.Cinema.Location</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Thành phố:</div>
+                        <div class="col-md-8">@Model.Cinema.City</div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4 fw-bold">Status:</div>
+                        <div class="col-md-8">
+                            <span class="badge @(Model.Cinema.Status == "Active" ? "bg-success" : "bg-danger")">
+                                @Model.Cinema.Status
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a asp-page="./ManageCinemas" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Quay lại
+                        </a>
+                        <a asp-page="/Room/ManageRooms" asp-route-id="@Model.Cinema.Id" class="btn btn-outline-secondary">
+                            Manage Room <i class="bi bi-arrow-right me-2"></i>
+                        </a>
+                        <a asp-page="./ChangeStatus" asp-route-id="@Model.Cinema.Id"
+                           class="btn @(Model.Cinema.Status == "Active" ? "btn-danger" : "btn-success")">
+                            <i class="bi @(Model.Cinema.Status == "Active" ? "bi-x-circle" : "bi-check-circle") me-2"></i>
+                            @(Model.Cinema.Status == "Active" ? "Deactivate" : "Activate")
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        .card-header {
+            background: #ff2c1f;
+            border-radius: 10px 10px 0 0;
+        }
+
+        h2 {
+            color: white;
+            font-weight: bold;
+        }
+
+        .fw-bold {
+            color: #333;
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 0.5em 1em;
+        }
+
+        .btn-outline-secondary {
+            padding: 0.5rem 1rem;
+            border-color: #ff2c1f;
+            color: #ff2c1f;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .btn-outline-secondary:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+
+        .btn-danger {
+            padding: 0.5rem 1rem;
+            background: #dc3545;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-danger:hover {
+                background: #c82333;
+            }
+
+        .btn-success {
+            padding: 0.5rem 1rem;
+            background: #28a745;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-success:hover {
+                background: #218838;
+            }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}

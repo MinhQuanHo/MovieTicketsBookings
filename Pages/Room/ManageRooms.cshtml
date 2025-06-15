@@ -1,0 +1,141 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Room.ManageRoomsModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = "_AdminLayout";
+    var count = 1;
+    var cinemaName = Model.Rooms?.FirstOrDefault()?.Cinema?.Name ?? "Rạp mới tạo";
+}
+
+<div class="container my-5">
+    <h2 class="text-center mb-4">Quản lý phòng chiếu - @cinemaName</h2>
+
+    <!-- Nút thêm phòng chiếu -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+        <div class="flex-shrink-0 mb-3 mb-md-0">
+            <a class="btn btn-success" href="@Url.Page("/Room/CreateRoom")">
+                <i class="bi bi-plus-circle me-2"></i> Thêm phòng chiếu mới
+            </a>
+        </div>
+    </div>
+
+    <!-- Bảng danh sách phòng chiếu -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th class="text-center">STT</th>
+                    <th class="text-center">Tên phòng</th>
+                    <th class="text-center">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Rooms != null && Model.Rooms.Count > 0)
+                {
+                    foreach (var room in Model.Rooms)
+                    {
+                        <tr>
+                            <td class="text-center">@count</td>
+                            <td>@room.Name</td>
+                            <td class="text-center">
+                                <form method="post" asp-page-handler="ManageSeat" class="d-inline ms-2">
+                                    <input type="hidden" name="id" value="@room.Id" />
+                                    <button type="submit" class="btn btn-success btn-sm">Quản lý ghế</button>
+                                </form>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3" class="text-center">Chưa có phòng chiếu nào. Nhấn "Thêm phòng chiếu mới" để bắt đầu.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #ff2c1f;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px orange;
+        }
+
+        .table {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(255, 245, 238, 0.8);
+        }
+
+        .btn-success {
+            padding: 0.5rem 1rem;
+            background: #ff2c1f;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-success:hover {
+                background: #fa1208;
+            }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}

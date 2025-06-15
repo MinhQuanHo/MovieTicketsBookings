@@ -1,0 +1,36 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Seat.ModifySeatModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	Layout = "_Layout";
+}
+
+<body>
+	<div class="container my-5">
+		<h2 class="text-center">Modify Seat</h2>
+		<form method="post" asp-page-handler="Save">
+			<div class="mb-3">
+				<label for="seatName" class="form-label">Seat Name</label>
+				<select class="form-select" asp-for="@Model.Seat.SeatName" required>
+					@foreach (var seat in @Model.Seats)
+					{
+						<option value="@seat.SeatName" )>@seat.SeatName</option>
+					}
+				</select>
+			</div>
+			<div class="mb-3">
+				<label for="status" class="form-label">Status</label>
+				<select id="status" name="Seat.Status" class="form-select" required>
+					<option value="Available">Available</option>
+					<option value="Booked">Booked</option>
+					<option value="Inactive">Inactive</option>
+				</select>
+			</div>
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary">Save Changes</button>
+				<a asp-page="/Seat/ManageSeats" class="btn btn-secondary">Cancel</a>
+			</div>
+		</form>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>

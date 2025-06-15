@@ -1,0 +1,242 @@
+﻿@page
+@model MovieTicketsBookings.Pages.User.ManageUsersModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-5">
+    <!-- Nút thêm người dùng -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
+        <div class="flex-shrink-0 mb-3 mb-md-0">
+            <a class="btn btn-success" asp-page="/User/CreateUser">
+                <i class="bi bi-person-plus-fill me-2"></i> Add New User
+            </a>
+        </div>
+    </div>
+    <form asp-page-handler="Search" method="post" class="my-4">
+        <div class="row g-3 align-items-center">
+            <!-- Select Bộ lọc -->
+            <div class="col-md-3">
+                <select class="form-select" name="SelectedStatus">
+                    <option value="" selected>Select status</option>
+                    <option value="Active">Active</option>
+                    <option value="Banned">Banned</option>
+                    <option value="Inactive">Inactive</option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select class="form-select" name="SelectedRole">
+                    <option value="" selected>Select role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Customer">Customer</option>
+                    <option value="Movie Theater Owner">Movie Theater Owner</option>
+                </select>
+            </div>
+
+            <!-- Input tìm kiếm -->
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search by username or email" name="SearchTerm" value="@Model.SearchTerm" />
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <!-- Msg -->
+    @if (!string.IsNullOrEmpty(Model.Msg))
+    {
+        <div class="alert alert-info mt-4" role="alert">
+            <i class="bi bi-info-circle me-2"></i>
+            @Model.Msg
+        </div>
+    }
+
+    <!-- Bảng danh sách người dùng -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="table-light">
+                <tr>
+                    <th>UserName</th>
+                    <th>Fullname</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Role</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in @Model.Users)
+                {
+                    <tr>
+                        <td>@user.Username</td>
+                        <td>@user.FullName</td>
+                        <td>@user.Email</td>
+                        <td>
+                            <span class="badge @(user.Status == "Active" ? "bg-success" : "bg-secondary")">
+                                @user.Status
+                            </span>
+                        </td>
+                        <td>@user.Role?.RoleName</td>
+                        <td class="text-center">
+                            <a asp-page="/User/EditUser" asp-route-id="@user.Id"><i class="bi bi-pencil-square"></i></a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@user.Id" class="d-inline">
+                                <button type="submit" class="bi border-0 text-danger" onclick="return confirm('Are you sure you want to delete this user?');">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Page navigation -->
+    <nav aria-label="Page navigation example" class="container mt-4">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
+                <a class="page-link" asp-page-handler="Search" asp-route-CurrentPage="@(Model.CurrentPage - 1)">Previous</a>
+            </li>
+
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" asp-page-handler="Search" asp-route-CurrentPage="@i">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(Model.CurrentPage == Model.TotalPages || Model.Users.Count == 0 ? "disabled" : "")">
+                <a class="page-link" asp-page-handler="Search" asp-route-CurrentPage="@(Model.CurrentPage + 1)">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        .table {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(255, 245, 238, 0.8);
+        }
+
+        .btn-success {
+            padding: 0.5rem 1rem;
+            background: #28a745;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-success:hover {
+                background: #218838;
+            }
+
+        .btn-outline-secondary {
+            padding: 0.5rem 1rem;
+            border-color: #ff2c1f;
+            color: #ff2c1f;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .btn-outline-secondary:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+
+        .form-select, .form-control {
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 0.5em 1em;
+        }
+
+        .alert-info {
+            background: rgba(173, 216, 230, 0.9);
+            border-radius: 10px;
+            color: #0c5460;
+        }
+
+        .pagination .page-link {
+            color: #ff2c1f;
+            border-radius: 0.5rem;
+            margin: 0 2px;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: #ff2c1f;
+            border-color: #ff2c1f;
+            color: white;
+        }
+
+        .pagination .page-link:hover {
+            background: #fa1208;
+            color: white;
+            border-color: #fa1208;
+        }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}
