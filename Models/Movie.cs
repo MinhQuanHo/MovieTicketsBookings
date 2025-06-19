@@ -13,9 +13,9 @@ public partial class Movie
 
     public int? CategoryId { get; set; }
 
-    public DateOnly? ReleaseDate { get; set; }
+    public DateTime? ReleaseDate { get; set; }
 
-    public TimeOnly? Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
 
     public string? TrailerUrl { get; set; }
 

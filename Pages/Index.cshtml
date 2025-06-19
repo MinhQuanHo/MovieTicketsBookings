@@ -2,9 +2,579 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinematic</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="~/css/profile.css" />
+    <script src="~/js/profile.js"></script>
+</head>
+<style>
+    * {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        text-decoration: none;
+        list-style: none;
+        scroll-padding-top: 2rem;
+        scroll-behavior: smooth;
+    }
+    /* variables  */
+    :root {
+        --main-color: #ff2c1f;
+        --text-color: #020307;
+        --bg-color: #fff;
+    }
+
+    body {
+        background: var(--text-color);
+        color: var(--bg-color);
+    }
+
+    header {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 100px;
+        transition: 0.5s;
+        background: #0e0e0e36;
+    }
+
+        header.shadow {
+            background: var(--bg-color);
+            box-shadow: 0 0 4px rgb(14 55 54/15%);
+        }
+
+            header.shadow .navbar a {
+                color: var(--text-color);
+            }
+
+            header.shadow .logo {
+                color: var(--text-color);
+            }
+
+
+    .logo {
+        font-size: 30px;
+        font-weight: 600;
+        align-items: center;
+        color: var(--bg-color);
+        display: flex;
+        column-gap: 0.5rem;
+    }
+
+    .bx {
+        color: var(--main-color);
+    }
+
+    .navbar {
+        display: flex;
+        column-gap: 5rem;
+    }
+
+        .navbar li {
+            position: relative;
+        }
+
+        .navbar a {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--bg-color);
+        }
+
+            .navbar a::after {
+                content: '';
+                width: 0;
+                height: 2px;
+                background: var(--main-color);
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                transition: 0.4s all linear;
+            }
+
+            .navbar a:hover::after,
+            .navbar .home-active::after {
+                width: 100%;
+            }
+
+    #menu-icon {
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1000001;
+        display: none;
+    }
+
+    .btn {
+        padding: 0.7rem 1.4rem;
+        background: var(--main-color);
+        color: var(--bg-color);
+        font-weight: 400;
+        border-radius: 0.5rem;
+    }
+
+        .btn:hover {
+            background: #fa1216;
+        }
+
+    /* Home  */
+    section {
+        padding: 4.5rem 0 1.5rem;
+    }
+
+    .container {
+        width: 100%;
+        min-height: 640px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        background: rgb(2, 3, 7,0.5);
+    }
+
+        .container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: inherit;
+            object-position: center;
+            z-index: -1;
+        }
+
+    .swiper-pagination-bullet {
+        width: 6px !important;
+        height: 6px !important;
+        border-radius: 0.2rem !important;
+        background: var(--bg-color) !important;
+        opacity: 1 !important;
+    }
+
+    .swiper-pagination-bullet-active {
+        width: 1.5rem !important;
+        background: var(--main-color) !important;
+    }
+
+    .home-text {
+        z-index: 1000;
+        padding: 0 150px;
+    }
+
+        .home-text span {
+            color: var(--bg-color);
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .home-text h1 {
+            color: var(--bg-color);
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+    .play {
+        position: absolute;
+        right: 4rem;
+        bottom: 10%;
+    }
+
+        .play .bx {
+            background: var(--bg-color);
+            padding: 10px;
+            font-size: 2rem;
+            border-radius: 50%;
+            border: 4px solid rgb(2, 3, 7,0.5);
+            color: var(--main-color);
+        }
+
+            .play .bx:hover {
+                background: var(--main-color);
+                color: var(--bg-color);
+                transition: 0.2s all linear;
+            }
+    /* movies  */
+    .heading {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2%;
+        text-align: left;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-weight: bold;
+        border-bottom: 1px solid var(--main-color);
+    }
+
+    .movies-container {
+        max-width: 1200px;
+        margin-right: auto;
+        margin-left: auto;
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .box .box-img {
+        width: 100%;
+        height: 320px;
+        cursor: pointer;
+    }
+
+        .box .box-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 3px;
+        }
+
+            .box .box-img img:hover {
+                transform: translateY(-10px);
+                transition: 0.2s all linear;
+            }
+
+    .box h3 {
+        font-size: 1rem;
+        font-weight: 500;
+        margin-top: 0.5rem;
+        text-align: center;
+    }
+
+    .box span {
+        font-size: 14px;
+        text-align: center;
+        display: block;
+        margin-top: 0.3rem;
+    }
+
+    /* coming container  */
+    .coming-container {
+        display: grid;
+        gap: 1rem;
+        max-width: 968px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+    }
+
+        .coming-container .box img:hover {
+            transform: translateY(0);
+        }
+
+        .coming-container .box img {
+            border-radius: 15px;
+        }
+
+    #searchInput {
+        padding: 0.5rem;
+        font-size: 1rem;
+        width: 200px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-left: 71%;
+        margin-top: 10px;
+    }
+
+    /* newsletter  */
+    .newsletter {
+        max-width: 968px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        row-gap: 2rem;
+    }
+
+        .newsletter h2 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .newsletter form {
+            background: var(--bg-color);
+            padding: 10px;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+            .newsletter form input {
+                border: none;
+                outline: none;
+            }
+
+    .email {
+        width: 280px;
+    }
+
+    .newsletter form input::placeholder {
+        color: var(--text-color);
+        font-size: 0.8rem;
+        font-weight: 400;
+    }
+
+    .newsletter .btn {
+        text-transform: uppercase;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    /* footer  */
+    .footer {
+        max-width: 968px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .social {
+        display: flex;
+        align-items: center;
+        column-gap: 0.5rem;
+    }
+
+        .social .bx {
+            background: var(--bg-color);
+            padding: 2px;
+            font-size: 2rem;
+            border-radius: 50%;
+            border: 4px solid rgb(2, 3, 7,0.4);
+            color: var(--main-color);
+        }
+
+            .social .bx:hover {
+                background: var(--main-color);
+                color: var(--bg-color);
+                transition: 0.2s all linear;
+            }
+
+    .copyright {
+        padding: 20px;
+        text-align: center;
+        color: var(--bg-color);
+    }
+
+</style>
+<body>
+    <!-- Navbar  -->
+    <header>
+        <a href="#home" class="logo">
+            <i class='bx bxs-movie'></i>CineMatic
+        </a>
+        <div class="bx bx-menu" id="menu-icon"></div>
+
+        <!-- menu  -->
+        <ul class="navbar">
+            <li><a href="#home" class="home-active">Trang chủ</a></li>
+            <li><a href="#movies">Phim</a></li>
+            <li><a href="#coming">Coming</a></li>
+            <li><a asp-page="/News/Blog">Tin Tức</a></li>
+            <!-- Kiểm tra vai trò và hiển thị nút tương ứng -->
+            @if (User.Identity.IsAuthenticated)
+            {
+                @if (User.IsInRole("1"))
+                {
+                    <li><a asp-page="/HomeAdmin">Home Admin</a></li>
+                }
+                @if (User.IsInRole("3"))
+                {
+                    <li><a asp-page="/HomeOwner">Home Owner</a></li>
+                }
+                @if (User.IsInRole("4"))
+                {
+                    <li><a asp-page="/HomeStaff">Home Staff</a></li>
+                }
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="profile-dropdown">
+                    <span class="user-name" onclick="toggleDropdown()">Hello, @User.Identity.Name</span>
+                    <div id="dropdown-menu" class="dropdown-content">
+                        <ul>
+                            <li><a asp-page="/UserProfile">Thông tin tài khoản</a></li>
+                            <li><a asp-page="/BookingHistory">Lịch sử giao dịch</a></li>
+                            <li><a asp-page="/Logout">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <!-- Đưa các nút vào trong navbar để chúng nằm cạnh nhau -->
+                <li><a asp-page="/Login" class="btn">Đăng nhập</a></li>
+                <li><a asp-page="/SignUp" class="btn">Đăng ký</a></li>
+            }
+        </ul>
+
+
+    </header>
+
+    <!-- Home  -->
+    <section class="home swiper" id="home">
+        <div class="swiper-wrapper">
+            @foreach (var movie in Model.PosterMovies)
+            {
+                <div class="swiper-slide container">
+                    <img src="~/img/@movie.Poster" alt="@movie.Title" class="poster-image">
+                    <div class="home-text">
+                        <span>@(movie.Category != null ? movie.Category.Name : "Category Not Available")</span>
+                        <h1>@movie.Title</h1>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="swiper-pagination"></div>
+    </section>
+
+    <!-- Add Swiper JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper', {
+            // Configure Swiper to auto-slide every 3 seconds
+            autoplay: {
+                delay: 3000, // Delay in milliseconds
+                disableOnInteraction: false, // Keeps autoplay even after interaction
+            },
+            loop: true, // Enable loop to continuously slide
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+        });
+    </script>
+
+
+    <!-- Movies: Opening This Week -->
+    <div class="movies" id="movies">
+        <h2 class="heading">Opening This Week</h2>
+        <input type="text" id="searchInput" placeholder="Tìm kiếm phim..." onkeyup="searchMovies()" />
+        <div class="movies-container">
+            @if (Model.OpeningMovies == null || Model.OpeningMovies.Count == 0)
+            {
+                <p>No movies are currently available.</p>
+            }
+            else
+            {
+                foreach (var movie in Model.OpeningMovies)
+                {
+                    <div class="box">
+                        <div class="box-img">
+                            <img src="~/img/@movie.Poster" alt="@movie.Title">
+                        </div>
+                        <h3><a asp-page="/Movie/MovieDetails" asp-route-id="@movie.Id" style="color: white; font-weight: bold;  font-size: 18px">@movie.Title</a></h3>
+                        <span>
+                            @if (movie.Duration.HasValue)
+                            {
+                                @($"{movie.Duration.Value.TotalMinutes} phút")
+                            }
+                            else
+                            {
+                                @("Duration Not Available")
+                            }
+                            | @(movie.Category != null ? movie.Category.Name : "Category Not Available")
+                        </span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <br />
+
+    <!-- Movies: Coming Soon -->
+    <div class="movies" id="coming">
+        <h2 class="heading">Coming Soon</h2>
+        <div class="movies-container">
+            @if (Model.ComingSoonMovies == null || Model.ComingSoonMovies.Count == 0)
+            {
+                <p>No movies are currently available.</p>
+            }
+            else
+            {
+                foreach (var movie in Model.ComingSoonMovies)
+                {
+                    <div class="box">
+                        <div class="box-img">
+                            <img src="~/img/@movie.Poster" alt="@movie.Title">
+                        </div>
+                        <h3>
+                            <a asp-page="/Movie/MovieDetails" asp-route-id="@movie.Id" style="color: white; font-weight: bold; font-size: 18px">@movie.Title</a>
+                        </h3>
+                        <span>
+                            @if (movie.Duration.HasValue)
+                            {
+                                @($"{movie.Duration.Value.TotalMinutes} phút")
+                            }
+                            else
+                            {
+                                @("Duration Not Available")
+                            }
+                            | @(movie.Category != null ? movie.Category.Name : "Category Not Available")
+                        </span>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Newsletter /\ -->
+    <section class="newsletter" id="newsletter">
+        <h2>Subscribe To Get <br>Newsletter</h2>
+        <form action="">
+            <input type="email" class="email" placeholder="Enter Email" required>
+            <input type="submit" value="Subscribe" class="btn">
+        </form>
+    </section>
+
+    <!-- footer  -->
+    <section class="footer">
+        <a href="" class="logo">
+            <i class="bx bxs-movie"></i>CineMatic
+        </a>
+        <div class="social">
+            <a href=""><i class='bx bxl-facebook'></i></a>
+            <a href=""><i class='bx bxl-twitter'></i></a>
+            <a href=""><i class='bx bxl-instagram'></i></a>
+        </div>
+    </section>
+
+    <!-- Copyright  -->
+    <div class="copyright">
+        <p>&#169; CineMatic All Right Reserved</p>
+    </div>
+    <script>
+        function searchMovies() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const movieBoxes = document.querySelectorAll('.movies-container .box');
+
+            movieBoxes.forEach(box => {
+                const title = box.querySelector('h3').innerText.toLowerCase();
+                box.style.display = title.includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
+
