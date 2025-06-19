@@ -1,0 +1,251 @@
+﻿@page
+@model MovieTicketsBookings.Pages.LoginModel
+@{
+	Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Đăng nhập</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+	<link rel="stylesheet" href="~/css/profile.css" />
+
+	<style>
+		* {
+			font-family: 'Poppins', sans-serif;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			text-decoration: none;
+			list-style: none;
+			scroll-padding-top: 2rem;
+			scroll-behavior: smooth;
+		}
+
+		body {
+			background: var(--text-color);
+			color: var(--bg-color);
+		}
+
+		header {
+			position: fixed;
+			width: 100%;
+			top: 0;
+			right: 0;
+			z-index: 1000;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding: 15px 100px;
+			transition: 0.5s;
+			background: #0e0e0e36;
+		}
+
+			header.shadow {
+				background: var(--bg-color);
+				box-shadow: 0 0 4px rgb(14 15 14/15%);
+			}
+
+				header.shadow .navbar a {
+					color: var(--text-color);
+				}
+
+				header.shadow .logo {
+					color: var(--text-color);
+				}
+
+
+		.logo {
+			font-size: 30px;
+			font-weight: 600;
+			align-items: center;
+			color: var(--bg-color);
+			display: flex;
+			column-gap: 0.5rem;
+		}
+
+			.logo .bx {
+				color: #ff2c1f; /* Màu đỏ */
+			}
+
+
+		.navbar {
+			display: flex;
+			align-items: center; /* Căn giữa theo chiều dọc */
+			column-gap: 5rem;
+		}
+
+			.navbar li {
+				position: relative;
+				display: flex;
+				align-items: center; /* Đảm bảo nội dung trong li cũng căn giữa */
+				justify-content: center; /* Căn giữa theo chiều ngang (nếu cần) */
+			}
+
+
+			.navbar a {
+				font-size: 1rem;
+				font-weight: bold; /* Chữ đậm */
+				color: white !important; /* Màu trắng */
+			}
+
+				.navbar a::after {
+					background: orange; /* Đổi hiệu ứng gạch chân thành màu cam */
+				}
+
+
+				.navbar a::after {
+					content: '';
+					width: 0;
+					height: 2px;
+					background: var(--main-color);
+					position: absolute;
+					bottom: -4px;
+					left: 0;
+					transition: 0.4s all linear;
+				}
+
+				.navbar a:hover::after,
+				.navbar .home-active::after {
+					width: 100%;
+				}
+
+		#menu-icon {
+			font-size: 24px;
+			cursor: pointer;
+			z-index: 1000001;
+			display: none;
+		}
+
+		.btn1 {
+			padding: 0.5rem 1rem;
+			background: #ff2c1f; /* Đổi màu nền thành cam */
+			color: white; /* Chữ màu trắng */
+			font-weight: bold; /* Chữ đậm */
+			border-radius: 0.5rem;
+			border: none;
+		}
+
+			.btn1:hover {
+				background: #fa1208; /* Màu cam đậm hơn khi hover */
+			}
+
+
+		.play {
+			position: absolute;
+			right: 4rem;
+			bottom: 10%;
+		}
+
+			.play .bx {
+				background: var(--bg-color);
+				padding: 10px;
+				font-size: 2rem;
+				border-radius: 50%;
+				border: 4px solid rgb(2, 3, 7,0.5);
+				color: var(--main-color);
+			}
+
+				.play .bx:hover {
+					background: var(--main-color);
+					color: var(--bg-color);
+					transition: 0.2s all linear;
+				}
+	</style>
+</head>
+<header>
+	<a href="/Index" class="logo" style="color: white">
+		<i class='bx bxs-movie'></i>CineMatic
+	</a>
+	<ul class="navbar">
+		<li><a asp-page="/Index" class="home-active">Trang chủ</a></li>
+		<li><a asp-page="/Index">Phim</a></li>
+		<li><a asp-page="/Index">Coming</a></li>
+		<li><a asp-page="/News/Blog">Tin Tức</a></li>
+		@if (User.Identity.IsAuthenticated)
+		{
+			<div class="profile-dropdown">
+				<span style="color: white" class="user-name" onclick="toggleDropdown()">Hello, @User.Identity.Name</span>
+				<div id="dropdown-menu" class="dropdown-content">
+					<ul>
+						<li><a asp-page="/UserProfile">Thông tin tài khoản</a></li>
+						<li><a asp-page="/BookingHistory">Lịch sử giao dịch</a></li>
+						<li><a asp-page="/Logout">Đăng xuất</a></li>
+					</ul>
+				</div>
+			</div>
+		}
+		else
+		{
+			<li><a asp-page="/Login" class="btn1">Đăng nhập</a></li>
+			<li><a asp-page="/SignUp" class="btn1">Đăng ký</a></li>
+		}
+	</ul>
+</header>
+<body class="img js-fullheight" style="background-image: url(img/login_background.jpg);">
+	<partial name="_Notification" />
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					@* <h1 class="heading-section" style="font-weight:bolder">Cinematic</h1> *@
+				</div>
+			</div>
+
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-4">
+					<div class="login-wrap p-0">
+						<h3 class="mb-4 text-center" style="color: white; font-weight:bold">Đăng nhập</h3>
+						<form method="post" class="signin-form">
+							<div class="form-group">
+								<input type="text" asp-for="Username" class="form-control" placeholder="Tên đăng nhập" value="@Model.Username">
+								<span asp-validation-for="Username" class="text-danger"></span>
+							</div>
+							<div class="form-group">
+								<input id="password-field" asp-for="Password" type="password" class="form-control" placeholder="Mật khẩu" value="@Model.Password">
+								<span asp-validation-for="Password" class="text-danger"></span>
+								<span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+							</div>
+							<div class="form-group d-flex">
+								<button type="submit" class="form-control btn btn-primary submit px-3 w-50 mr-1">Đăng nhập</button>
+								<a asp-page="/SignUp" class="form-control btn btn-primary submit px-3 w-50 ml-1 text-center align-middle"
+								   style="display: flex; justify-content: center; align-items: center; text-decoration: none;">
+									Đăng ký
+								</a>
+							</div>
+							<div class="form-group d-md-flex">
+								<div class="w-50">
+									<label class="checkbox-wrap checkbox-primary">
+										Nhớ mật khẩu
+										<input asp-for="RememberMe" type="checkbox">
+										<span class="checkmark" style="background: #fbceb5"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a asp-page="/ForgotPassword" style="color: #fff">Quên mật khẩu ?</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</body>
+</html>
