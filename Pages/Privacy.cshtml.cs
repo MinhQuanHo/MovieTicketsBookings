@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MovieTicketsBookings.Pages
+namespace MovieTicketsOnlineBooking.Pages
 {
     public class PrivacyModel : PageModel
     {

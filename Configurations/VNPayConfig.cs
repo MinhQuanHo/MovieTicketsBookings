@@ -1,4 +1,4 @@
-﻿namespace MMovieTicketsBookings.Configurations
+﻿namespace MMovieTicketsOnlineBooking.Configurations
 {
     public class VNPayConfig
     {
