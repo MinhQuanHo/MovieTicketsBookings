@@ -1,0 +1,317 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Movie.MovieDetailsModel
+@{
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@Model.Movie.Title</title>
+    <link rel="stylesheet" href="../css/styleMovieDetails2.css">
+    <link rel="stylesheet" href="../css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="../css/styleMovieDetails.css">
+    <link rel="stylesheet" href="../css/bb.css">
+    <link rel="stylesheet" href="~/css/profile.css" />
+    <script src="~/js/profile.js"></script>
+    <style>
+        .modal-backdrop.show {
+            z-index: 0
+        }
+
+        @@media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 892px;
+                margin: 30px auto;
+            }
+
+            .modal-sm {
+                max-width: 300px;
+            }
+        }
+
+        .rating {
+            direction: rtl;
+            font-size: 1.5em;
+        }
+
+            .rating input[type="radio"] {
+                display: none;
+            }
+
+            .rating label {
+                color: lightgray;
+                cursor: pointer;
+            }
+
+                .rating input[type="radio"]:checked ~ label,
+                .rating label:hover,
+                .rating label:hover ~ label {
+                    color: gold;
+                }
+
+        .rating {
+            position: relative;
+            display: inline-block;
+            font-size: 24px; /* điều chỉnh kích thước sao */
+            line-height: 1;
+        }
+
+        .gray-stars {
+            color: lightgray;
+        }
+
+        .stars {
+            color: gold;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <main role="main" class="main" style="margin-left:0px">
+                <nav class="navbar top-menu">
+                    <ul class="navbar-nav d-flex flex-row w-100">
+                        <li class="nav-item active">
+                            <a class="nav-link" style="font-size: 15px; font-weight:bold" asp-page="/Index">Cinematic  <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="font-size: 15px" asp-page="/Index">Phim mới </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="font-size: 15px" asp-page="/Index">Phim đang chiếu </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="font-size: 15px" asp-page="/News/ListNews">Tin tức</a>
+                        </li>
+                        <li class="nav-item ml-auto"></li>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="profile-dropdown">
+                                <span class="user-name" onclick="toggleDropdown()" style="font-size: 25px;margin-right: 40px;padding: 20px;">
+                                    <i class="fa fa-user-circle" style="margin-right: 5px;"></i> @User.Identity.Name
+                                </span>
+                                <div id="dropdown-menu" class="dropdown-content">
+                                    <ul>
+                                        <li><a asp-page="/UserProfile">Thông tin tài khoản</a></li>
+                                        <li><a href="#">Lịch sử giao dịch</a></li>
+                                        <li><a asp-page="/Logout">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <!-- Hiển thị nút đăng nhập và đăng ký nếu chưa đăng nhập -->
+                            <a class="nav-link" asp-page="/Login">Đăng nhập</a>
+                            <a class="nav-link" asp-page="/SignUp">Đăng ký</a>
+                        }
+                    </ul>
+                </nav>
+
+
+                <div class="cast-container" style="background-image: url(../img/@Model.Movie.Poster)">
+                    <div class="cast-wrap d-flex">
+                        <div class="movie-poster">
+                            <img src="../img/@Model.Movie.Poster" alt="" style="width: 255px; height: 378px;">
+
+
+                            <a asp-page="/BookDate" class="btn btn-primary btn-lg btn-block"><i class="fa fa-television" aria-hidden="true"></i> Đặt vé </a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-secondary btn-lg btn-block" data-toggle="modal" data-target="#trailerMovie">
+                                Trailer
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade bd-example-modal-lg" id="trailerMovie" tabindex="-1" role="dialog" aria-labelledby="trailerMovieLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="trailerMovieLabel">Trailer @Model.Movie.Title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <iframe width="860" height="515" src="@Model.GetEmbedUrl(Model.Movie.TrailerUrl)" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.movie-poster -->
+                        <div class="cast-info">
+                            <div class="cast-name">
+                                <h3>@Model.Movie.Title</h3>
+                            </div>
+                            <div class="cast-job">
+                                <a href="#"><strong>Thể loại:</strong> @Model.Movie.Category?.Name</a> <br />
+                            </div>
+                            <div class="movie-social">
+                                <a href="#"><i class="fa fa-heart" aria-hidden="true"></i> Lưu phim</a>
+                                <a href="#"><i class="fa fa-facebook-official" aria-hidden="true"></i> Chia sẻ</a>
+                            </div>
+                            <div class="movie-rate">
+                                <div class="movie-rate__point">
+                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                    <p>
+                                        <span>@Model.AverageRating.ToString("0.0")</span> / 5<br>
+                                        <span class="rv">@Model.TotalReviews Đánh giá</span>
+                                    </p>
+                                </div>
+                                <div class="movie-rate__rate-star">
+                                    <p>Đánh giá phim: </p>
+                                    @{
+                                        double rating = @Model.AverageRating;
+
+                                        // Tính số sao đầy, làm tròn xuống
+                                        int fullStars = (int)Math.Floor(rating);
+
+                                        // Tính số sao nửa, chỉ hiển thị khi phần thập phân lớn hơn hoặc bằng 0.5
+                                        int halfStar = (rating - fullStars >= 0.5) ? 1 : 0;
+
+                                        // Tính số sao trống
+                                        int emptyStars = 5 - fullStars - halfStar;
+                                    }
+
+                                    @for (int i = 0; i < fullStars; i++)
+                                    {
+                                        <i class="fa fa-star full-star"></i>
+                                    }
+
+                                    @if (halfStar == 1)
+                                    {
+                                        <i class="fa fa-star-half-o half-star"></i>
+                                    }
+
+                                    @for (int i = 0; i < emptyStars; i++)
+                                    {
+                                        <i class="fa fa-star-o empty-star"></i>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="cast-bio movie-nav-tabs">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="true">Mô tả phim</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review" aria-selected="false">Đánh giá</a>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                                        <a><strong>Ngày phát hành: </strong>@Model.Movie.ReleaseDate?.ToString("dd/MM/yyyy")</a>
+                                        <br />
+                                        <a><strong>Diễn viên: </strong>@Model.Movie.Actor</a>
+                                        <br />
+                                        <br />
+                                        <p> @Model.Movie.Description</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                        <p> @Model.Movie.Description</p>
+                                        <iframe width="660" height="415" src="@Model.GetEmbedUrl(Model.Movie.TrailerUrl)" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+                                        <img class="img-fluid" src="@Model.Movie.Poster" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comments" style="margin-top: 5%">
+                        <h2>Bình luận</h2>
+                        @if (Model.CanComment)
+                        {
+                            <div class="comment-box">
+                                <form method="post">
+                                    <div class="rating">
+                                        @for (int i = 5; i >= 1; i--)
+                                        {
+                                            <input type="radio" id="star-@i" name="Rate" value="@i" /> 
+                                            <label for="star-@i" title="Rate @i stars">★</label>
+                                        }
+                                    </div> <br />
+                                    <input type="text" name="CommentText" placeholder="Leave a Comment" required style="width: 600px" />
+                                    <button type="submit" style="padding: 12px 12px 12px 12px; background-color: #171B27; color: white; border: none; border-radius: 4px; cursor: pointer; height: 60px">Gửi</button>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <p style="color: red;">You must have purchased a ticket to comment on this movie.</p>
+                        }
+
+                        <div class="users">
+                            @foreach (var feedback in Model.Feedbacks)
+                            {
+                                <div class="user">
+                                    <div class="user-com" style="padding-bottom: 0.5rem">
+                                        <div class="info" style="gap: 14rem">
+                                            <div class="name">
+                                                <h4 style="padding-bottom: 0px">@feedback.User?.Username</h4>
+                                                <div class="rating">
+                                                    <div class="stars" style="width: @(feedback.Rate * 20)%;">
+                                                        ★★★★★
+                                                    </div>
+                                                    <div class="gray-stars">
+                                                        ★★★★★
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="date">
+                                                <p style="padding-bottom: 0px">@feedback.CreateAt?.ToString("dd/MM/yyyy") <span>@feedback.CreateAt?.ToString("hh:mm tt")</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="comment">
+                                            <p>@feedback.Comments</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+
+                    <footer class="footer">
+                        <div>
+                            <h4>Movies</h4>
+                            <h4>Animated Movies</h4>
+                        </div>
+                        <div>
+                            <h4>Privacy Policy</h4>
+                            <h4>Terms of Use</h4>
+                        </div>
+                        <div>
+                            <h4>Help Center</h4>
+                            <h4>FAQ</h4>
+                        </div>
+                        <div>
+                            <h4>Follow Us</h4>
+                            <h4>Support</h4>
+                        </div>
+                    </footer>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../js/jquery-3.2.1.slim.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../js/jquery.min.js"><\/script>')</script>
+    <script src="../js/vendor/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

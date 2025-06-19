@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MovieTicketsBookings.Models;
+namespace MovieTicketsBookings.Models 
+{ 
 
 public partial class Booking
 {
@@ -28,4 +29,5 @@ public partial class Booking
     public virtual Showtime? Showtime { get; set; }
 
     public virtual User? User { get; set; }
+}
 }

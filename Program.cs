@@ -1,3 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+using NToastNotify;
+using OfficeOpenXml;
+using MovieTicketsBookings.Models;
 namespace MovieTicketsBookings
 {
     public class Program
@@ -8,6 +14,7 @@ namespace MovieTicketsBookings
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+            builder.Services.AddDbContext<Prn222FinalProjectContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

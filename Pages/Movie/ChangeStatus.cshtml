@@ -1,0 +1,171 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Movie.ChangeStatusModel
+@{
+    Layout = "_AdminLayout";
+}
+<div class="container my-5" style="max-width: 600px">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-center mb-0">Xác nhận thay đổi trạng thái phim</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Bạn có chắc chắn muốn thay đổi trạng thái của phim này không?</h5>
+            <p class="card-text">
+                <strong>Tên phim:</strong> @Model.Movie.Title
+            </p>
+            <p class="card-text">
+                <strong>Trạng thái hiện tại:</strong>
+                <span class="badge @(Model.Movie.Status == "Active" ? "bg-success" : "bg-danger")">
+                    @Model.Movie.Status
+                </span>
+            </p>
+            <p class="card-text">
+                <strong>Trạng thái mới:</strong>
+                <span class="badge @(Model.Movie.Status == "Active" ? "bg-danger" : "bg-success")">
+                    @(Model.Movie.Status == "Active" ? "Inactive" : "Active")
+                </span>
+            </p>
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Cảnh báo: Hành động này sẽ ảnh hưởng đến tính khả dụng của phim trong hệ thống.
+            </div>
+            <form method="post">
+                <input type="hidden" asp-for="Movie.Id" />
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn @(Model.Movie.Status == "Active" ? "btn-danger" : "btn-success")">
+                        <i class="bi @(Model.Movie.Status == "Active" ? "bi-x-circle" : "bi-check-circle") me-2"></i>
+                        @(Model.Movie.Status == "Active" ? "Deactivate" : "Activate")
+                    </button>
+                    <a class="btn btn-outline-secondary" asp-page="./MovieDetailsAdmin" asp-route-id="@Model.Movie.Id">
+                        <i class="bi bi-x-circle me-2"></i>Thoát
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+        }
+
+        .card-header {
+            background: #ff2c1f;
+            border-radius: 10px 10px 0 0;
+        }
+
+        h2 {
+            color: white;
+            font-weight: bold;
+        }
+
+        h5 {
+            color: #ff2c1f;
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 0.5em 1em;
+        }
+
+        .alert-warning {
+            background: rgba(255, 245, 158, 0.9);
+            border-radius: 10px;
+            color: #856404;
+        }
+
+        .btn-danger {
+            padding: 0.5rem 1rem;
+            background: #dc3545;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-danger:hover {
+                background: #c82333;
+            }
+
+        .btn-success {
+            padding: 0.5rem 1rem;
+            background: #28a745;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-success:hover {
+                background: #218838;
+            }
+
+        .btn-outline-secondary {
+            padding: 0.5rem 1rem;
+            border-color: #ff2c1f;
+            color: #ff2c1f;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            transition: background 0.2s, color 0.2s;
+        }
+
+            .btn-outline-secondary:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}
