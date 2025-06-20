@@ -33,7 +33,7 @@ namespace MovieTicketsBookings.Models
         [Phone(ErrorMessage = "Số điện thoại không hợp lệ")]
         public string? PhoneNumber { get; set; }
 
-    public DateTime? Dob { get; set; }
+        public DateTime? Dob { get; set; }
 
         [Required(ErrorMessage = "Họ và tên không được để trống")]
         [StringLength(100, ErrorMessage = "Họ và tên không được vượt quá 100 ký tự")]

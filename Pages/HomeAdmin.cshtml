@@ -1,0 +1,136 @@
+﻿@page
+@model MovieTicketsBooking.Pages.HomeAdminModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý người dùng</h5>
+                    <p class="card-text">Xem và quản lý người dùng.</p>
+                    <a asp-page="User/ManageUsers" class="btn btn-primary">Đi đến trang quản lý người dùng</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý danh mục phim</h5>
+                    <p class="card-text">Xem và quản lý danh mục phim.</p>
+                    <a asp-page="/Category/ManageCategory" class="btn btn-primary">Đi đến trang quản lý danh mục phim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý rạp phim</h5>
+                    <p class="card-text">Xem và quản lý danh sách rạp phim.</p>
+                    <a asp-page="/Cinema/ManageCinemas" class="btn btn-primary">Đi đến trang quản lý danh sách rạp phim</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Quản lý bộ phim</h5>
+                    <p class="card-text">Xem và quản lý danh sách bộ phim.</p>
+                    <a asp-page="/Movie/ManageMovies" class="btn btn-primary">Đi đến trang quản lý danh sách bộ phim</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            background-image: url("/img/login_background.jpg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+        }
+
+        .container {
+            margin-top: 120px;
+            background-color: antiquewhite;
+            border-radius: 15px;
+            border: dashed;
+            color: orangered;
+            padding: 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            transition: transform 0.2s;
+        }
+
+            .card:hover {
+                transform: scale(1.05);
+            }
+
+        .card-title {
+            color: #ff2c1f;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px orange;
+        }
+
+        .card-text {
+            color: #333;
+        }
+
+        .btn-primary {
+            padding: 0.5rem 1rem;
+            background: #ff2c1f;
+            color: white;
+            font-weight: bold;
+            border-radius: 0.5rem;
+            border: none;
+            transition: background 0.2s;
+        }
+
+            .btn-primary:hover {
+                background: #fa1208;
+            }
+
+        .dropdown-menu {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 0.5rem;
+            color: #333;
+        }
+
+        .dropdown-item {
+            color: #ff2c1f;
+        }
+
+            .dropdown-item:hover {
+                background: #ff2c1f;
+                color: white;
+            }
+    </style>
+}
