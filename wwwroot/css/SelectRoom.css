@@ -1,0 +1,115 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+    color: #fff;
+    background-color: #0073e6;
+    padding: 15px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    padding: 40px;
+}
+
+.theater-group {
+    width: 200px;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+
+    .theater-group:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+.theater-name {
+    font-weight: bold;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.rooms {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.room-door {
+    display: flex;
+    justify-content: center;
+}
+
+.room-button {
+    background-color: #0073e6;
+    color: white;
+    width: 150px;
+    padding: 20px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+    .room-button:hover {
+        background-color: #005bb5;
+        transform: scale(1.05);
+    }
+/* Pagination styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+    .pagination a {
+        text-decoration: none;
+        color: #0073e6;
+        padding: 10px 15px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: 2px solid #0073e6;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+        .pagination a:hover {
+            background-color: #0073e6;
+            color: white;
+        }
+
+        .pagination a.active {
+            background-color: #0073e6;
+            color: white;
+            border-color: #005bb5;
+        }
+
+        .pagination a:disabled {
+            color: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }

@@ -1,0 +1,73 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f7f7f7;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.container {
+    flex: 1;
+}
+footer {
+    margin-bottom: 0;
+    /* Đẩy footer xuống cuối */
+}
+.card:hover {
+    transform: scale(1.02);
+    transition: all 0.3s ease-in-out;
+  }
+  
+/* Tùy chỉnh phân trang */s
+.pagination {
+    margin: 20px 0; /* Khoảng cách phía trên và dưới */
+}
+
+.pagination .page-item {
+    margin: 0 5px; /* Khoảng cách giữa các nút phân trang */
+}
+
+.pagination .page-link {
+    color: #007bff; /* Màu sắc của liên kết */
+    border: 1px solid #007bff; /* Đường viền của liên kết */
+    border-radius: 5px; /* Bo góc */
+    padding: 8px 12px; /* Padding cho nút */
+    transition: background-color 0.3s, color 0.3s; /* Hiệu ứng chuyển đổi */
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff; /* Màu nền khi hover */
+    color: #ffffff; /* Màu chữ khi hover */
+}
+
+.pagination .page-item.disabled .page-link {
+    color: #6c757d; /* Màu chữ cho trang đã vô hiệu hóa */
+    border-color: #6c757d; /* Đường viền cho trang đã vô hiệu hóa */
+    pointer-events: none; /* Không cho phép click */
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff; /* Màu nền cho trang đang hoạt động */
+    color: #ffffff; /* Màu chữ cho trang đang hoạt động */
+    border-color: #007bff; /* Đường viền cho trang đang hoạt động */
+}
+
+.pagination .page-link:focus {
+    outline: none; /* Ẩn outline mặc định */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hiệu ứng bóng cho nút focus */
+}
+@media (max-width: 768px) {
+    /* Mobile Styles */
+    header .navbar {
+        display: none; /* Hide navbar on smaller screens */
+        flex-direction: column;
+        background-color: #333;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        padding: 1rem 0;
+        border-radius: 5px;
+    }
