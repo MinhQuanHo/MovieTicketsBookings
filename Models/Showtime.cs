@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MovieTicketsBookings.Models;
+namespace MovieTicketsOnlineBooking.Models;
 
 public partial class Showtime
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace MovieTicketsBookings.Models;
+namespace MovieTicketsOnlineBooking.Models;
 
 public partial class Prn222FinalProjectContext : DbContext
 {

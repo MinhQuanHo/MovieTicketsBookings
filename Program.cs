@@ -1,10 +1,16 @@
-namespace MovieTicketsBookings
+using Microsoft.EntityFrameworkCore;
+using MovieTicketsOnlineBooking.Models;
+
+namespace MovieTicketsOnlineBooking
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<Prn222FinalProjectContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddRazorPages();

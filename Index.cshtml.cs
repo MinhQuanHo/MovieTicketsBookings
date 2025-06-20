@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using MovieTicketsBookings.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
+namespace MovieTicketsBookings.Pages
+{
     public class IndexModel : PageModel
     {
         private readonly Prn222FinalProjectContext _projectContext;
