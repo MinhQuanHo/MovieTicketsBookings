@@ -13,7 +13,7 @@ namespace MovieTicketsBookings.Pages.Movie
 
         public List<Feedback> Feedbacks { get; set; }
         public int TotalReviews { get; set; }
-        public double AverageRating { get; set; }
+        public double AverageRating { get; set; } 
         [BindProperty]
         public string CommentText { get; set; } = string.Empty;
         [BindProperty]

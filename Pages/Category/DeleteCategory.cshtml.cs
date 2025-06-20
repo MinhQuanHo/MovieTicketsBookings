@@ -15,7 +15,7 @@ namespace MovieTicketsBookings.Pages.Category
             _context = context;
         }
 
-        [BindProperty]
+        [BindProperty] 
         public MovieCategory category { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)

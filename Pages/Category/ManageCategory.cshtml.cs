@@ -10,7 +10,7 @@ namespace MovieTicketsBookings.Pages.Category
     {
         public List<Models.MovieCategory> categories = new List<Models.MovieCategory>();
         private readonly Prn222FinalProjectContext _context;
-
+         
         [BindProperty(SupportsGet = true)]
         public string CurrentFilter { get; set; }
 

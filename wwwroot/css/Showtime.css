@@ -1,0 +1,326 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.scheduler {
+    display: inline-block;
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.table-container {
+    width: 100%; /* Giữ nguyên độ rộng của lịch */
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+    margin-top: 10px;
+}
+
+    .table-container div {
+        padding: 8px;
+        border: 1px solid #ccc;
+        text-align: center;
+    }
+
+.time-slot {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+.event {
+    background-color: #3399ff;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+.day-header {
+    background-color: #eee;
+    font-weight: bold;
+}
+
+.button-container {
+    margin: 5px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+button {
+    padding: 8px 12px;
+    margin: 0;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.scheduler-content {
+    display: flex;
+    gap: 20px;
+    align-items: stretch; /* Đảm bảo hai phần tử có chiều cao bằng nhau */
+    flex-wrap: wrap; /* Đảm bảo form nhảy xuống khi màn hình hẹp */
+}
+
+.table-container {
+    flex: 1 1 65%; /* Độ rộng của lịch chiếm 65% */
+    overflow-y: auto; /* Thêm scroll nếu lịch quá cao */
+    max-height: 700px; /* Giới hạn chiều cao tối đa của lịch */
+}
+
+.showtime-form {
+    flex: 1 1 30%; /* Độ rộng của form chiếm 30% */
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    max-height: 700px; /* Giới hạn chiều cao tối đa của form để khớp với lịch */
+    box-sizing: border-box;
+}
+
+    .showtime-form h3 {
+        margin-top: 0;
+        font-size: 1.2em;
+    }
+
+    .showtime-form label {
+        display: block;
+        margin-top: 8px;
+        font-size: 0.9em;
+    }
+
+    .showtime-form input,
+    .showtime-form select {
+        width: 100%;
+        padding: 6px;
+        margin-top: 5px;
+        font-size: 0.9em;
+    }
+
+    .showtime-form button {
+        margin-top: 10px;
+        padding: 8px;
+        width: 48%;
+        font-size: 0.9em;
+        box-sizing: border-box;
+    }
+
+@media (max-width: 768px) {
+    .scheduler-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .table-container, .showtime-form {
+        flex: 1 1 100%;
+        max-width: 600px;
+    }
+}
+
+/* Định dạng cho phần label của checkbox */
+label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Định dạng cho checkbox */
+input[type="checkbox"] {
+    /* Mẫu checkbox mặc định */
+    appearance: none; /* Loại bỏ kiểu mặc định */
+    width: 20px;
+    height: 20px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    position: relative;
+    margin-right: 10px;
+    background-color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+    /* Thêm hiệu ứng khi hover vào checkbox */
+    input[type="checkbox"]:hover {
+        border-color: #007bff;
+    }
+
+    /* Kiểu dáng khi checkbox được chọn */
+    input[type="checkbox"]:checked {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 8px;
+            height: 8px;
+            background-color: white;
+            border-radius: 50%;
+        }
+
+    /* Hiệu ứng focus khi người dùng di chuyển đến checkbox */
+    input[type="checkbox"]:focus {
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+/* Thêm khoảng cách cho các phần tử */
+.showtime-form {
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    button[type="button"] {
+        background-color: #dc3545;
+    }
+
+        button[type="button"]:hover {
+            background-color: #c82333;
+        }
+
+.auto-render-container {
+    display: flex;
+    align-items: center; /* Căn giữa checkbox và label theo chiều dọc */
+}
+
+.auto-render-checkbox {
+    margin-right: 10px; /* Khoảng cách giữa checkbox và label */
+}
+
+.auto-render-label {
+    margin: 0; /* Đảm bảo không có khoảng cách mặc định ở xung quanh label */
+}
+/* Container chính */
+.scheduler {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+}
+
+/* Header và nút quay lại (back) */
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header {
+    flex-grow: 1;
+    text-align: center;
+}
+
+/* Button container */
+.button-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+/* Scheduler content */
+.scheduler-content {
+    display: flex;
+    gap: 20px;
+    align-items: stretch; /* Đảm bảo các phần tử có chiều cao bằng nhau */
+    flex-wrap: wrap; /* Đảm bảo form nhảy xuống khi màn hình hẹp */
+    min-height: 700px; /* Thiết lập chiều cao tối thiểu cho container */
+}
+
+.table-container {
+    overflow-x: auto; /* Giúp bảng có thể cuộn ngang trên màn hình nhỏ */
+}
+
+/* Day header và time slots */
+.day-header {
+    font-weight: bold;
+    text-align: center;
+}
+
+.time-slot {
+    text-align: center;
+    padding: 5px;
+}
+
+/* Form thêm/sửa suất chiếu */
+.showtime-form {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    /* Chuyển các phần tử sang hàng dọc khi trên màn hình nhỏ */
+    .header-container {
+        flex-direction: column;
+    }
+
+    .button-container {
+        flex-direction: column;
+    }
+
+    .scheduler-content {
+        grid-template-columns: 30px repeat(7, 1fr);
+    }
+
+    .showtime-form {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Điều chỉnh nội dung lịch chiếu cho màn hình rất nhỏ */
+    .scheduler-content {
+        grid-template-columns: 1fr;
+    }
+
+    .day-header,
+    .time-slot {
+        font-size: 0.8em;
+    }
+
+    .button-container {
+        flex-direction: column;
+        gap: 5px;
+    }
+}

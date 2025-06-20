@@ -7,7 +7,7 @@ using System.Security.Claims;
 namespace MovieTicketsBookings.Pages.Movie
 {
     public class CreateMovieModel : PageModel
-    {
+    { 
         public List<MovieCategory> categories { get; set; }
         private readonly Prn222FinalProjectContext _context;
         private readonly IWebHostEnvironment _environment;

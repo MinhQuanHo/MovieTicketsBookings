@@ -1,0 +1,33 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Màu nền sáng */
+}
+
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng cho navbar */
+}
+
+.sticky-top {
+    background-color: #ffffff; /* Màu nền cho tiêu đề */
+}
+
+.card {
+    border: none; /* Bỏ viền cho card */
+}
+
+.card-header {
+    background-color: #007bff; /* Màu nền cho header của card */
+    color: #fff; /* Màu chữ cho header của card */
+}
+
+.table th, .table td {
+    vertical-align: middle; /* Căn giữa nội dung ô */
+}
+
+.badge {
+    font-size: 0.9rem; /* Kích thước chữ cho badge */
+}
+
+.btn-success {
+    margin-top: 10px; /* Khoảng cách trên cho nút xác nhận */
+}

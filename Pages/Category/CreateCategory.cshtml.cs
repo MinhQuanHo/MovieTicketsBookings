@@ -12,7 +12,7 @@ namespace MovieTicketsBookings.Pages.Category
         public CreateCategoryModel(Prn222FinalProjectContext context)
         {
             _context = context;
-        }
+        } 
 
         [BindProperty]
         public MovieCategory category { get; set; }

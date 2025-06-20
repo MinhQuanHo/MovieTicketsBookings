@@ -11,7 +11,7 @@ namespace MovieTicketsBookings.Pages.Movie
         private readonly Prn222FinalProjectContext _context;
 
         public MovieDetailsAdminModel(Prn222FinalProjectContext context)
-        {
+        { 
             _context = context;
         }
 

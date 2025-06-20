@@ -10,7 +10,7 @@ public class IndexModel : PageModel
     private readonly Prn222FinalProjectContext _projectContext;
 
     public IndexModel(Prn222FinalProjectContext projectContext)
-    {
+    { 
         _projectContext = projectContext;
     }
 

@@ -9,7 +9,7 @@ namespace MovieTicketsBookings.Pages.Movie
     {
         private readonly Prn222FinalProjectContext _context;
 
-        public ChangeStatusModel(Prn222FinalProjectContext context)
+        public ChangeStatusModel(Prn222FinalProjectContext context) 
         {
             _context = context;
         }

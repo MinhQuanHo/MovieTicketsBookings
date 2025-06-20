@@ -13,7 +13,7 @@ namespace MovieTicketsBookings.Pages.Category
 
         private readonly Prn222FinalProjectContext _context;
 
-        public EditCategoryModel(Prn222FinalProjectContext context)
+        public EditCategoryModel(Prn222FinalProjectContext context) 
         {
             _context = context;
         }
