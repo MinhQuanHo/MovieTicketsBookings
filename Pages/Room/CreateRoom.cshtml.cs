@@ -4,7 +4,7 @@ using MovieTicketsBookings.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MMovieTicketsBookings.Pages.Room
+namespace MovieTicketsBookings.Pages.Room
 {
     public class CreateRoomModel : PageModel
     {
