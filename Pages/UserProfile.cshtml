@@ -1,0 +1,333 @@
+﻿@page
+@model MovieTicketsBookings.Pages.UserProfileModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+            list-style: none;
+            scroll-padding-top: 2rem;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 100px;
+            transition: 0.5s;
+            background: #0e0e0e36;
+        }
+
+            header.shadow {
+                background: var(--bg-color);
+                box-shadow: 0 0 4px rgb(14 15 14/15%);
+            }
+
+                header.shadow .navbar a {
+                    color: var(--text-color);
+                }
+
+                header.shadow .logo {
+                    color: var(--text-color);
+                }
+
+
+        .logo {
+            font-size: 30px;
+            font-weight: 600;
+            align-items: center;
+            color: var(--bg-color);
+            display: flex;
+            column-gap: 0.5rem;
+        }
+
+            .logo .bx {
+                color: #ff2c1f; /* Màu đỏ */
+            }
+
+
+        .navbar {
+            display: flex;
+            align-items: center; /* Căn giữa theo chiều dọc */
+            column-gap: 5rem;
+        }
+
+            .navbar li {
+                position: relative;
+                display: flex;
+                align-items: center; /* Đảm bảo nội dung trong li cũng căn giữa */
+                justify-content: center; /* Căn giữa theo chiều ngang (nếu cần) */
+            }
+
+
+            .navbar a {
+                font-size: 1rem;
+                font-weight: bold; /* Chữ đậm */
+                color: white !important; /* Màu trắng */
+            }
+
+                .navbar a::after {
+                    background: orange; /* Đổi hiệu ứng gạch chân thành màu cam */
+                }
+
+
+                .navbar a::after {
+                    content: '';
+                    width: 0;
+                    height: 2px;
+                    background: var(--main-color);
+                    position: absolute;
+                    bottom: -4px;
+                    left: 0;
+                    transition: 0.4s all linear;
+                }
+
+                .navbar a:hover::after,
+                .navbar .home-active::after {
+                    width: 100%;
+                }
+
+        #menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1000001;
+            display: none;
+        }
+
+        .btn1 {
+            padding: 0.5rem 1rem;
+            background: #ff2c1f; /* Đổi màu nền thành cam */
+            color: white; /* Chữ màu trắng */
+            font-weight: bold; /* Chữ đậm */
+            border-radius: 0.5rem;
+            border: none;
+        }
+
+            .btn1:hover {
+                background: #fa1208; /* Màu cam đậm hơn khi hover */
+            }
+
+        /* Profile Dropdown */
+        .profile-dropdown {
+            position: relative;
+        }
+
+            .profile-dropdown .user-name {
+                color: #ddd;
+                cursor: pointer;
+            }
+
+            .profile-dropdown .dropdown-content {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: #333;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                border-radius: 5px;
+                overflow: hidden;
+            }
+
+            .profile-dropdown:hover .dropdown-content {
+                display: block;
+            }
+
+        .dropdown-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .dropdown-content ul li a {
+                display: block;
+                color: #ddd;
+                padding: 0.5rem 1rem;
+                text-decoration: none;
+                transition: background-color 0.3s;
+            }
+
+                .dropdown-content ul li a:hover {
+                    background-color: #444;
+                    color: #fff;
+                }
+
+        /* Responsive Menu Icon */
+        #menu-icon {
+            display: none; /* Hide menu icon on larger screens */
+            color: #ddd;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+
+
+        header .navbar li {
+            text-align: center;
+        }
+
+        #menu-icon {
+            display: block;
+        }
+
+            /* Show navbar when menu icon is clicked */
+            #menu-icon.active + .navbar {
+                display: flex;
+            }
+
+        }
+    </style>
+</head>
+
+<body class="img js-fullheight" style="background-image: url(img/login_background.jpg); background-size:cover; background-repeat:no-repeat; background-position:center; height:800px">
+    <header>
+        <a href="/Index" class="logo" style="color: white">
+            <i class='bx bxs-movie'></i>CineMatic
+        </a>
+        <!-- menu  -->
+        <ul class="navbar">
+            <li><a asp-page="/Index" class="home-active">Trang chủ</a></li>
+            <li><a asp-page="/Index">Phim</a></li>
+            <li><a asp-page="/Index">Coming</a></li>
+            <li><a asp-page="/News/Blog">Tin Tức</a></li>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="profile-dropdown">
+                    <span style="color: white" class="user-name" onclick="toggleDropdown()">Hello, @User.Identity.Name</span>
+                    <div id="dropdown-menu" class="dropdown-content">
+                        <ul>
+                            <li><a asp-page="/UserProfile">Thông tin tài khoản</a></li>
+                            <li><a asp-page="/BookingHistory">Lịch sử giao dịch</a></li>
+                            <li><a asp-page="/Logout">Đăng xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <li><a asp-page="/Login" class="btn1">Đăng nhập</a></li>
+                <li><a asp-page="/SignUp" class="btn1">Đăng ký</a></li>
+            }
+        </ul>
+
+
+    </header>
+    <div style="margin-top: 100px">
+    <form method="post">
+        <div class="container light-style flex-grow-1 container-p-y" >
+            
+            <div class="card overflow-hidden">
+                <h4 class="font-weight-bold py-3 mb-4" style="margin: 15px">
+                        Account settings
+                </h4>
+                <div class="row no-gutters row-bordered row-border-light">
+                    <div class="col-md-6">
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="account-general">
+                                <hr class="border-light m-0">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label class="form-label">Họ và tên</label>
+                                        <input type="text" class="form-control" asp-for="FullName" id="FullName" onchange="checkChanges()">
+                                        <span asp-validation-for="FullName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" class="form-control" asp-for="Email" id="Email" onchange="checkChanges()">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Số điện thoại</label>
+                                        <input type="text" class="form-control" asp-for="PhoneNumber" id="PhoneNumber" onchange="checkChanges()">
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Ngày sinh</label>
+                                        <input type="date" class="form-control" asp-for="Dob" id="Dob" onchange="checkChanges()">
+                                        <span asp-validation-for="Dob" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <a href="#" onclick="toggleChangePassword()" style="display: inline-block; margin-top: 5px;">Đổi mật khẩu</a>
+                                    </div>
+
+                                    <div id="changePasswordFields" style="display:none;">
+                                        <div class="form-group">
+                                            <label class="form-label">Mật khẩu mới</label>
+                                            <input type="password" asp-for="NewPassword" class="form-control" id="NewPassword" onchange="checkChanges()" />
+                                            <span asp-validation-for="NewPassword" class="text-danger"></span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Xác nhận mật khẩu mới</label>
+                                            <input type="password" asp-for="ConfirmPassword" class="form-control" id="ConfirmPassword" onchange="checkChanges()" />
+                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-right mt-3">
+                                    <button type="submit" class="btn btn-primary" id="saveButton" style="display:none;">Save changes</button>&nbsp;
+                                    <button type="button" class="btn1" style="margin-bottom:10px">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                            <i class="bi bi-person-circle" style="font-size: 290px; color: #ff2c1f;"></i>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Kiểm tra sự thay đổi trong các trường thông tin
+        function checkChanges() {
+            var saveButton = document.getElementById('saveButton');
+            saveButton.style.display = 'inline-block';
+        }
+
+        // Ẩn/hiện trường mật khẩu mới
+        function toggleChangePassword() {
+            var changePasswordFields = document.getElementById('changePasswordFields');
+            if (changePasswordFields.style.display === 'none') {
+                changePasswordFields.style.display = 'block';
+            } else {
+                changePasswordFields.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -16,7 +16,7 @@ namespace MMovieTicketsBookings.Pages.Room
         }
 
         [BindProperty]
-        public Models.Room Room { get; set; } = new Models.Room();
+        public MovieTicketsBookings.Models.Room Room { get; set; } = new MovieTicketsBookings.Models.Room();
 
         [BindProperty]
         public List<RowInput> RowsInput { get; set; } = new List<RowInput>();

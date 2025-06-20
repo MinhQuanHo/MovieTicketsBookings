@@ -17,7 +17,7 @@ public partial class User
 
     public string? PhoneNumber { get; set; }
 
-    public DateOnly? Dob { get; set; }
+    public DateTime? Dob { get; set; }
 
     public string? FullName { get; set; }
 

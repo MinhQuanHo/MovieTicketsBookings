@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
-using MovieTicketsBookings;
+using MovieTicketsBooking;
 
 
 namespace MovieTicketsBookings.Pages.User
