@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using MovieTicketsBooking;
 using MovieTicketsBookings.Models;
 using NToastNotify;
 
@@ -41,8 +42,8 @@ namespace MovieTicketsBookings
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
-
-            var app = builder.Build();
+			builder.Services.AddTransient<EmailService>();
+			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
