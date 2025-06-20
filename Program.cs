@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.EntityFrameworkCore;
-using MovieTicketsBookings.Models;
-using NToastNotify;
-
-namespace MovieTicketsBookings
+﻿namespace MovieTicketsBookings
 {
     public class Program
     {

@@ -1,25 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MovieTicketsBookings.Models;
-
-public partial class Showtime
+namespace MovieTicketsBookings.Models
 {
-    public int Id { get; set; }
 
-    public int? MovieId { get; set; }
+    public partial class Showtime
+    {
+        public int Id { get; set; }
 
-    public int? RoomId { get; set; }
+        public int? MovieId { get; set; }
 
-    public TimeOnly? StartTime { get; set; }
+        public int? RoomId { get; set; }
 
-    public TimeOnly? EndTime { get; set; }
+        public TimeSpan? StartTime { get; set; }
 
-    public DateTime? Date { get; set; }
+        public TimeSpan? EndTime { get; set; }
 
-    public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
+        public DateTime? Date { get; set; }
 
-    public virtual Movie? Movie { get; set; }
+        public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 
-    public virtual Room? Room { get; set; }
+        public virtual Movie? Movie { get; set; }
+
+        public virtual Room? Room { get; set; }
+    }
 }

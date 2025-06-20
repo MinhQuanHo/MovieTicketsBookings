@@ -1,0 +1,33 @@
+﻿@page
+@model MovieTicketsBookings.Pages.Category.DeleteCategoryModel
+@{
+    Layout = "_AdminLayout";
+}
+<div class="container my-5" style="max-width: 600px">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="text-center mb-0">Xác nhận xóa</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Bạn có chắc muốn xóa thể loại phim này ?</h5>
+            <p class="card-text">
+                <strong>Tên thể loại:</strong> @Model.category.Name
+            </p>
+            <div class="alert alert-warning">
+                <i class="bi bi-exclamation-triangle me-2"></i>
+                Cảnh báo: Hành động này không thể hoàn tác được. Tất cả các phim liên quan đến thể loại này có thể bị ảnh hưởng.
+            </div>
+            <form method="post" asp-route-id="@Model.category.Id">
+                <input type="hidden" asp-for="category.Id" />
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-2"></i>Xóa
+                    </button>
+                    <a class="btn btn-outline-secondary" asp-page="./ManageCategories">
+                        <i class="bi bi-x-circle me-2"></i>Thoát
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
